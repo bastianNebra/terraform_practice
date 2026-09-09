@@ -1,0 +1,24 @@
+# Apply once after `terraform apply`, with `kubectl apply -f argocd-bootstrap-app.yaml`,
+# using credentials from `az aks get-credentials --resource-group <rg> --name <aks_cluster_name>`.
+# This is the single "app of apps" that lets ArgoCD self-manage all other applications
+# from the GitLab repo, so every push to GitLab is auto-synced to the cluster.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mziba-root
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://gitlab.com/mziba1/mziba-backend.git
+    targetRevision: feat/MZIBA-email-service-transporter-expediteur
+    path: gitops/apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
