@@ -13,6 +13,21 @@ output "acr_login_server" {
   value       = azurerm_container_registry.main.login_server
 }
 
+output "postgres_server_fqdn" {
+  description = "Private FQDN of the PostgreSQL Flexible Server"
+  value       = azurerm_postgresql_flexible_server.main.fqdn
+}
+
+output "postgres_database_name" {
+  description = "Application PostgreSQL database name"
+  value       = azurerm_postgresql_flexible_server_database.main.name
+}
+
+output "postgres_admin_login" {
+  description = "PostgreSQL administrator login"
+  value       = azurerm_postgresql_flexible_server.main.administrator_login
+}
+
 output "kube_config" {
   description = "Kubeconfig for the AKS cluster (use `az aks get-credentials` instead where possible)"
   value       = azurerm_kubernetes_cluster.main.kube_config_raw

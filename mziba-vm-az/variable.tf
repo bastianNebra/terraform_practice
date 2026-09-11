@@ -51,6 +51,73 @@ variable "aks_subnet_cidr" {
   default     = "10.10.1.0/24"
 }
 
+# --- PostgreSQL Flexible Server ---
+
+variable "postgres_server_name" {
+  description = "Globally unique Azure PostgreSQL Flexible Server name"
+  type        = string
+  default     = "psql-mziba-prod"
+}
+
+variable "postgres_subnet_cidr" {
+  description = "CIDR block for the delegated PostgreSQL subnet"
+  type        = string
+  default     = "10.10.2.0/24"
+}
+
+variable "postgres_version" {
+  description = "PostgreSQL major version"
+  type        = string
+  default     = "16"
+}
+
+variable "postgres_sku_name" {
+  description = "PostgreSQL Flexible Server SKU"
+  type        = string
+  default     = "B_Standard_B1ms"
+}
+
+variable "postgres_storage_mb" {
+  description = "PostgreSQL storage size in MiB"
+  type        = number
+  default     = 32768
+}
+
+variable "postgres_backup_retention_days" {
+  description = "Number of days to retain PostgreSQL backups"
+  type        = number
+  default     = 7
+}
+
+variable "postgres_zone" {
+  description = "Availability zone for PostgreSQL (null lets Azure choose)"
+  type        = string
+  default     = null
+}
+
+variable "postgres_admin_login" {
+  description = "PostgreSQL administrator login"
+  type        = string
+  default     = "mziba_admin"
+}
+
+variable "postgres_admin_password" {
+  description = "PostgreSQL administrator password (provide via TF_VAR_postgres_admin_password)"
+  type        = string
+  sensitive   = true
+  nullable    = false
+  validation {
+    condition     = length(var.postgres_admin_password) >= 8
+    error_message = "postgres_admin_password must contain at least 8 characters."
+  }
+}
+
+variable "postgres_database_name" {
+  description = "Application database name"
+  type        = string
+  default     = "mziba"
+}
+
 # --- ACR ---
 
 variable "acr_name" {

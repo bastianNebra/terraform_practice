@@ -1,0 +1,14 @@
+subscription_id     = "00000000-0000-0000-0000-000000000000"
+resource_group_name = "rg-mziba-prod"
+location            = "francecentral"
+acr_name            = "acrmzibaprod"
+aks_cluster_name    = "aks-mziba-prod"
+
+# PostgreSQL server names are globally unique in Azure.
+postgres_server_name = "psql-mziba-prod"
+postgres_database_name = "mziba"
+postgres_admin_login = "mziba_admin"
+postgres_subnet_cidr = "10.10.2.0/24"
+
+# Set the password outside this file:
+# export TF_VAR_postgres_admin_password='...'
