@@ -1,1 +1,5 @@
 .env
+*.info
+*.tfstate
+*.tfstate.backup
+.terraform/
