@@ -16,16 +16,18 @@ terraform {
     }
   }
 
-  # TODO: move to a remote backend (azurerm storage account) before team/CI use.
-  # backend "azurerm" {
-  #   resource_group_name  = "rg-mziba-tfstate"
-  #   storage_account_name = "sttfstatemziba"
-  #   container_name       = "tfstate"
-  #   key                  = "mziba-vm-az.tfstate"
-  # }
+# Configure the remote backend for storing Terraform state in Azure Storage.
+   backend "azurerm" {
+     resource_group_name  = "rg-mziba-tfstate"
+     storage_account_name = "sttfstatemziba"
+     container_name       = "tfstate"
+     key                  = "mziba-vm-az.tfstate"
+   }
 }
 
-# Auth: uses Azure CLI locally (`az login`); use OIDC federated credentials in CI (no static secrets).
+
+
+# Auth: uses Azure CLI locally
 provider "azurerm" {
   features {
     key_vault {
