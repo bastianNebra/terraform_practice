@@ -91,3 +91,15 @@ resource "helm_release" "ingress_nginx" {
     value = "LoadBalancer"
   }
 }
+# Bootstraps the Cert-Manager in-cluster; it manages TLS certificates for the cluster.
+resource "helm_release" "cert_manager" {
+  name             = "cert-manager"
+  repository       = "https://charts.jetstack.io"
+  chart            = "cert-manager"
+  namespace        = "cert-manager"
+  create_namespace = true
+  set = [{
+    name  = "installCRDs"
+    value = "true"
+  }]
+}
